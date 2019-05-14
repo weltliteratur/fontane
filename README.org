@@ -108,6 +108,9 @@ plot 'fontane_interwiki.tsv' using :9:xtic(1) title '' with boxes
 
 #+END_SRC
 
+*Achtung:* Die Daten für die Englische Version stimmen nicht, das
+scheinen die für die "simple"-English-Version zu sein (warum auch
+immer)!
 
 [[fontane_interwiki_backlinks.png]]
 
@@ -116,3 +119,54 @@ plot 'fontane_interwiki.tsv' using :9:xtic(1) title '' with boxes
 [[fontane_interwiki_revisions.png]]
 
 [[fontane_interwiki_textlen.png]]
+
+*** Articles of his works (German Wikipedia)
+
+starting point: https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
+
+#+BEGIN_SRC sh
+  
+#+END_SRC
+
+Plot some of the columns:
+
+#+BEGIN_SRC gnuplot :results silent
+reset
+set datafile separator "\t"
+
+set grid
+set boxwidth 0.5
+set style fill solid
+set xtics rotate by 45 right
+
+
+set title '(wiki markup) text length'
+set term png enhanced size 800,800 font "Arial,12" lw 2
+set out "fontane_werke_textlen.png"
+plot 'fontane_werke.tsv' using :2:xtic(1) title '' with boxes
+
+set title 'number of contributors'
+set term png enhanced size 800,800 font "Arial,12" lw 2
+set out "fontane_werke_contributors.png"
+plot 'fontane_werke.tsv' using :3:xtic(1) title '' with boxes
+
+set title 'number of revisions'
+set term png enhanced size 800,800 font "Arial,12" lw 2
+set out "fontane_werke_revisions.png"
+plot 'fontane_werke.tsv' using :4:xtic(1) title '' with boxes
+
+set title 'number of backlinks'
+set term png enhanced size 800,800 font "Arial,12" lw 2
+set out "fontane_werke_backlinks.png"
+plot 'fontane_werke.tsv' using :9:xtic(1) title '' with boxes
+
+#+END_SRC
+
+
+[[fontane_werke_backlinks.png]]
+
+[[fontane_werke_contributors.png]]
+
+[[fontane_werke_revisions.png]]
+
+[[fontane_werke_textlen.png]]
