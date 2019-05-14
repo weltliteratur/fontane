@@ -76,9 +76,9 @@ def page_in_different_languages(name, sep):
 def print_stats(i, name, stats, sep):
     # header
     if i == 0:
-        print("#", sep.join(stats.keys()))
+        print("# name", sep.join(stats.keys()), sep=sep)
         # data
-    print(name, sep.join([str(c) for c in stats.values()]))
+    print(name, sep.join([str(c) for c in stats.values()]), sep=sep)
     
 def iter_stats(names, sep):
     names = ["Theodor Fontane"]

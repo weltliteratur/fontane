@@ -59,7 +59,6 @@ Fragen. Und da hangeln wir uns durch bis wir genug haben…
 *** Anzahl Artikel (WP-Sprachversionen)
 
 * Analysis
-
 ** Preparation
 
 Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywikibot]], a Python library for interacting with Wikipedia:
@@ -74,3 +73,46 @@ Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywik
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --languages "Theodor Fontane" > fontane_interwiki.tsv
 #+END_SRC
+
+Plot some of the columns:
+
+#+BEGIN_SRC gnuplot :results silent
+reset
+set datafile separator "\t"
+
+set grid
+set boxwidth 0.5
+set style fill solid
+set xtics rotate by 45 right
+
+
+set title '(wiki markup) text length'
+set term png enhanced size 800,600 font "Arial,12" lw 2
+set out "fontane_interwiki_textlen.png"
+plot 'fontane_interwiki.tsv' using :2:xtic(1) title '' with boxes
+
+set title 'number of contributors'
+set term png enhanced size 800,600 font "Arial,12" lw 2
+set out "fontane_interwiki_contributors.png"
+plot 'fontane_interwiki.tsv' using :3:xtic(1) title '' with boxes
+
+set title 'number of revisions'
+set term png enhanced size 800,600 font "Arial,12" lw 2
+set out "fontane_interwiki_revisions.png"
+plot 'fontane_interwiki.tsv' using :4:xtic(1) title '' with boxes
+
+set title 'number of backlinks'
+set term png enhanced size 800,600 font "Arial,12" lw 2
+set out "fontane_interwiki_backlinks.png"
+plot 'fontane_interwiki.tsv' using :9:xtic(1) title '' with boxes
+
+#+END_SRC
+
+
+[[fontane_interwiki_backlinks.png]]
+
+[[fontane_interwiki_contributors.png]]
+
+[[fontane_interwiki_revisions.png]]
+
+[[fontane_interwiki_textlen.png]]
