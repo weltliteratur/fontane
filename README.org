@@ -7,6 +7,7 @@
 #+LaTeX_CLASS: scrartcl
 #+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
 
+* Aspekte
 
 - Fontane im Vergleich zu anderen Autoren des 19. Jahrhunderts (47
   WP-Einträge sind schon ne ganze Menge, finde ich)
@@ -19,6 +20,9 @@
     mit "Tiefe" die Anzahl der Bearbeitungen oder die Komplexität der
     Überschriften-Struktur?
 
+Kurze Frage noch: Kommt man per Wikidata auch an die Depth der
+Artikelbearbeitungen ran über die API? Wüsste grad nicht wie.
+
 - analog dazu Ranking der 17 Romane von Fontane
   - OK
 
@@ -26,5 +30,47 @@
   Sprachen)
   - Wieviele gibt es da? Wie finden wir die alle?
 
+
+In Sachen Gedichte bzw. Werke allgemein, das hier scheinen alle zu sein,
+die auf Wikipedia eigene Artikel haben:
+https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
+
+
 - in-links und out-links
   - OK. PageRank wäre teuer
+
+Ansonsten stelle ich mir für einfache Wikidata-Fragen so was vor wie:
+Ranke alle deutschen Autoren des 19. Jahrhunderts nach der Häufigkeit
+der Artikel in verschiedenen Sprachen und zeige an, wo Fontane steht
+usw. – Anhand der Ergebnisse ergeben sich dann fast von alleine neue
+Fragen. Und da hangeln wir uns durch bis wir genug haben…
+
+* Metriken
+** Wikidata
+*** Anzahl Statements
+** Artikel
+*** Länge
+*** Bearbeitungen
+*** Tiefe
+*** In-Links
+*** Out-Links
+*** PageRank
+** Entität
+*** Anzahl Artikel (WP-Sprachversionen)
+
+* Analysis
+
+** Preparation
+
+Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywikibot]], a Python library for interacting with Wikipedia:
+
+#+BEGIN_SRC sh
+  wget https://tools.wmflabs.org/pywikibot/core_stable.tar.gz
+  tar xzf core_stable.tar.gz
+#+END_SRC
+
+** "Theodor Fontane" articles in different language versions
+
+#+BEGIN_SRC sh
+  python3 core_stable/pwb.py wiki.py --languages "Theodor Fontane" > fontane_interwiki.tsv
+#+END_SRC
