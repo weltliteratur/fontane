@@ -1,0 +1,30 @@
+#+TITLE:
+#+AUTHOR: 
+#+EMAIL: 
+#+LANGUAGE: en
+#+OPTIONS: toc:nil ':t H:5
+#+STARTUP: hidestars overview
+#+LaTeX_CLASS: scrartcl
+#+LaTeX_CLASS_OPTIONS: [a4paper,11pt]
+
+
+- Fontane im Vergleich zu anderen Autoren des 19. Jahrhunderts (47
+  WP-Einträge sind schon ne ganze Menge, finde ich)
+  - einfache Anzahlen (Folie (?) mit Portraits, Zahlen, Sprachen?)
+
+- Längen und Artikel-Tiefen der einzelnen Beiträge, um zu
+  verdeutlichen, in welcher Sprache wirklich an einem guten Artikel
+  gearbeitet wurde
+  - meinst Du hier die Artikel der verschiedenen Autoren? Meinst Du
+    mit "Tiefe" die Anzahl der Bearbeitungen oder die Komplexität der
+    Überschriften-Struktur?
+
+- analog dazu Ranking der 17 Romane von Fontane
+  - OK
+
+- Gedichte von Fontane (welche haben WP-Artikel und in welchen
+  Sprachen)
+  - Wieviele gibt es da? Wie finden wir die alle?
+
+- in-links und out-links
+  - OK. PageRank wäre teuer
