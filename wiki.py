@@ -129,20 +129,23 @@ if __name__ == '__main__':
             print_stats(i, lang, sitestats[lang], args.separator)
 
     if args.file:
-        # given a file with (currently) three columns:
-        # http://www.wikidata.org/entity/Q34787   Friedrich Engels        168
+        # given a file with (currently) four columns:
+        # http://www.wikidata.org/entity/Q34787   Friedrich Engels        168	https://de.wikipedia.org/wiki/Friedrich_Engels
         # print statistics for the entity in column two from the German Wikipedia
 
         site = pywikibot.Site("de", "wikipedia")
 
         i = 0
         for line in args.file:
-            s, desc, linkcount = line.strip().split('\t')
+            s, desc, linkcount, url = line.strip().split('\t')
             # skip first line, if it is header
             if not (s == "s" and desc == "desc"):
-                # get stats for "desc" (= title of Wikipedia page)
-                page = pywikibot.Page(site, desc)
-                
+                # get stats for url
+                #
+                # FIXME: we manually extract the name of the page, it
+                # would be better to do this automatically
+                name = url[len("https://de.wikipedia.org/wiki/"):]
+                page = pywikibot.Page(site, name)
                 print_stats(i, desc, get_page_stats(page), args.separator)
                 i = i + 1
         
@@ -160,7 +163,6 @@ if __name__ == '__main__':
             sys.exit(args.category + " is not a category page")
 
         for i, a in enumerate(page.articles(namespaces = [0])):
-            # FIXME: a.title does not work well
             print(i, a.title())
 
         # test dbName()

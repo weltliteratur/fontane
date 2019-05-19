@@ -129,7 +129,7 @@ Plot some of the columns:
 
 ** Contemporaries of Fontane
 
-Download the result of the SPARQL query https://w.wiki/3xF as TSV file
+Download the result of the SPARQL query https://w.wiki/48T as TSV file
 file:contemporaries.tsv and 
 
 #+BEGIN_SRC sh
