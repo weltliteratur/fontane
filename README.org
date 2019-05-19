@@ -69,6 +69,8 @@ plot 'fontane_interwiki.tsv' using :11:xtic(1) title '' with boxes
 
 [[fontane_interwiki_textlen.png]]
 
+[[fontane_interwiki_firstrev.png]]
+
 ** Articles of Fontane's works (German Wikipedia)
 
 starting point: https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
