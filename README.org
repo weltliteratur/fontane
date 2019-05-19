@@ -59,6 +59,10 @@ Fragen. Und da hangeln wir uns durch bis wir genug haben…
 *** Anzahl Artikel (WP-Sprachversionen)
 
 * Analysis
+** TODO Tasks
+- Fix problem with missing English Wikipedia/Simple English Wikipedia
+- Könnte man eigentlich automatisiert auch anzeigen, wann welche
+  Sprachversion begonnen wurde?
 ** Preparation
 
 Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywikibot]], a Python library for interacting with Wikipedia:
@@ -85,26 +89,30 @@ set boxwidth 0.5
 set style fill solid
 set xtics rotate by 45 right
 
+set term png enhanced size 800,600 font "Arial,12" lw 2
 
 set title '(wiki markup) text length'
-set term png enhanced size 800,600 font "Arial,12" lw 2
 set out "fontane_interwiki_textlen.png"
 plot 'fontane_interwiki.tsv' using :2:xtic(1) title '' with boxes
 
 set title 'number of contributors'
-set term png enhanced size 800,600 font "Arial,12" lw 2
 set out "fontane_interwiki_contributors.png"
 plot 'fontane_interwiki.tsv' using :3:xtic(1) title '' with boxes
 
 set title 'number of revisions'
-set term png enhanced size 800,600 font "Arial,12" lw 2
 set out "fontane_interwiki_revisions.png"
 plot 'fontane_interwiki.tsv' using :4:xtic(1) title '' with boxes
 
 set title 'number of backlinks'
-set term png enhanced size 800,600 font "Arial,12" lw 2
 set out "fontane_interwiki_backlinks.png"
 plot 'fontane_interwiki.tsv' using :9:xtic(1) title '' with boxes
+
+set title 'date of first revision of page'
+set out "fontane_interwiki_firstrev.png"
+set ydata time
+# 2002-05-13T13:59:54Z
+set timefmt '%Y-%m-%dT%H:%M:%SZ'
+plot 'fontane_interwiki.tsv' using :11:xtic(1) title '' with boxes
 
 #+END_SRC
 
@@ -120,7 +128,7 @@ immer)!
 
 [[fontane_interwiki_textlen.png]]
 
-*** Articles of his works (German Wikipedia)
+** Articles of Fontane's works (German Wikipedia)
 
 starting point: https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
 
@@ -131,34 +139,33 @@ starting point: https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
 Plot some of the columns:
 
 #+BEGIN_SRC gnuplot :results silent
-reset
-set datafile separator "\t"
+  reset
+  set datafile separator "\t"
 
-set grid
-set boxwidth 0.5
-set style fill solid
-set xtics rotate by 45 right
+  set grid
+  set boxwidth 0.5
+  set style fill solid
+  set xtics rotate by 45 right
 
+  set title '(wiki markup) text length'
+  set term png enhanced size 800,600 font "Arial,12" lw 2
+  set out "fontane_werke_textlen.png"
+  plot 'fontane_werke.tsv' using :2:xtic(1) title '' with boxes
 
-set title '(wiki markup) text length'
-set term png enhanced size 800,600 font "Arial,12" lw 2
-set out "fontane_werke_textlen.png"
-plot 'fontane_werke.tsv' using :2:xtic(1) title '' with boxes
+  set title 'number of contributors'
+  set term png enhanced size 800,600 font "Arial,12" lw 2
+  set out "fontane_werke_contributors.png"
+  plot 'fontane_werke.tsv' using :3:xtic(1) title '' with boxes
 
-set title 'number of contributors'
-set term png enhanced size 800,600 font "Arial,12" lw 2
-set out "fontane_werke_contributors.png"
-plot 'fontane_werke.tsv' using :3:xtic(1) title '' with boxes
+  set title 'number of revisions'
+  set term png enhanced size 800,600 font "Arial,12" lw 2
+  set out "fontane_werke_revisions.png"
+  plot 'fontane_werke.tsv' using :4:xtic(1) title '' with boxes
 
-set title 'number of revisions'
-set term png enhanced size 800,600 font "Arial,12" lw 2
-set out "fontane_werke_revisions.png"
-plot 'fontane_werke.tsv' using :4:xtic(1) title '' with boxes
-
-set title 'number of backlinks'
-set term png enhanced size 800,600 font "Arial,12" lw 2
-set out "fontane_werke_backlinks.png"
-plot 'fontane_werke.tsv' using :9:xtic(1) title '' with boxes
+  set title 'number of backlinks'
+  set term png enhanced size 800,600 font "Arial,12" lw 2
+  set out "fontane_werke_backlinks.png"
+  plot 'fontane_werke.tsv' using :9:xtic(1) title '' with boxes
 
 #+END_SRC
 

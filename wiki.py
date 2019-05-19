@@ -5,12 +5,12 @@
 # Extract statistics from Wikipedia/Wikidata
 #
 # Usage: python3 core_stable/pwb.py wiki.py --help
-# 
-# Author: rja 
+#
+# Author: rja
 #
 # Changes:
 # 2019-05-14 (rja)
-# - initial version 
+# - initial version
 
 import re
 import pywikibot
@@ -31,10 +31,10 @@ version = "0.0.2"
 # - number of categories
 # - number of revisions
 # - number of contributors
-#
+# - datetime of first revision
 def get_page_stats(page):
     d = collections.OrderedDict() # keep insertion order
-    
+
     # Wikipedia
     # see https://doc.wikimedia.org/pywikibot/master/api_ref/pywikibot.html#module-pywikibot.page
     d["textlen"]    = len(page.text)                                       # FIXME: use plain text
@@ -43,9 +43,10 @@ def get_page_stats(page):
     d["extlinks"]   = len([e for e in page.extlinks()])                    # TODO: figure out meaning
     d["interlinks"] = len(get_interwiki(page))                             #       of all those different
     d["interlang"]  = len([i for i in page.langlinks()])                   #       types of links
-    d["linkedpag"]  = len([i for i in page.linkedPages(namespaces = [0])]) # 
+    d["linkedpag"]  = len([i for i in page.linkedPages(namespaces = [0])]) #
     d["backlinks"]  = len([b for b in page.backlinks(namespaces = [0])])   # 0 = article namespace
     d["categories"] = len([c for c in page.categories()])                  # TODO: some not meaningful
+    d["firstrev"]   = get_first_revision(page).timestamp
 
     # Wikidata
     # see https://doc.wikimedia.org/pywikibot/master/api_ref/pywikibot.html#pywikibot.ItemPage
@@ -60,6 +61,12 @@ def get_interwiki(page):
     except ValueError:
         return []
 
+def get_first_revision(page):
+    last = None
+    for last in page.revisions():
+        pass
+    return last
+
 # print statistics
 def print_stats(i, name, stats, sep):
     # header
@@ -71,7 +78,7 @@ def print_stats(i, name, stats, sep):
 
 # main method - program control flow starts here
 if __name__ == '__main__':
-    
+
     # parse command line arguments
     parser = argparse.ArgumentParser(description='Extract stats from Wikipedia', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-l', '--languages', type=str, metavar="ARTICLE", help='stats for articles versions in all available languages')
@@ -96,11 +103,11 @@ if __name__ == '__main__':
             stats = get_page_stats(a)
             # FIXME: a.title does not work well
             print_stats(i, a.title, stats, args.separator)
-            
+
     if args.languages:
         # Given the (English) name of an article, extract statistics
         # for all available language versions.
-        # 
+        #
         # FIXME: We start with the English Wikipedia, since in the
         # German Wikipedia, "en" and "simple" are both abbreviated
         # "en".
@@ -117,13 +124,20 @@ if __name__ == '__main__':
         # print stats
         for i, lang in enumerate(sorted(sitestats)):
             print_stats(i, lang, sitestats[lang], args.separator)
-            
+
     if args.test:
         # test Wikidata
         site = pywikibot.Site("de", "wikipedia")
         page = pywikibot.Page(site, args.test)
 
-        data = page.data_item()
-        claims = data.get()["claims"] # claims, labels, aliases, descriptions, sitelinks
-        for d in claims:
-            print(d, claims[d])
+        # datetime of first revision
+        for r in page.revisions():
+            print(r.revid, r.timestamp)
+
+
+        # Wikidata
+        if False:
+            data = page.data_item()
+            claims = data.get()["claims"] # claims, labels, aliases, descriptions, sitelinks
+            for d in claims:
+                print(d, claims[d])
