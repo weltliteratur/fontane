@@ -59,10 +59,6 @@ Fragen. Und da hangeln wir uns durch bis wir genug haben…
 *** Anzahl Artikel (WP-Sprachversionen)
 
 * Analysis
-** TODO Tasks
-- Fix problem with missing English Wikipedia/Simple English Wikipedia
-- Könnte man eigentlich automatisiert auch anzeigen, wann welche
-  Sprachversion begonnen wurde?
 ** Preparation
 
 Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywikibot]], a Python library for interacting with Wikipedia:
@@ -116,10 +112,6 @@ plot 'fontane_interwiki.tsv' using :11:xtic(1) title '' with boxes
 
 #+END_SRC
 
-*Achtung:* Die Daten für die Englische Version stimmen nicht, das
-scheinen die für die "simple"-English-Version zu sein (warum auch
-immer)!
-
 [[fontane_interwiki_backlinks.png]]
 
 [[fontane_interwiki_contributors.png]]
@@ -133,7 +125,7 @@ immer)!
 starting point: https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
 
 #+BEGIN_SRC sh
-  
+  python3 core_stable/pwb.py wiki.py --category "Kategorie:Werk_von_Theodor_Fontane" > fontane_werke.tsv
 #+END_SRC
 
 Plot some of the columns:
@@ -147,28 +139,32 @@ Plot some of the columns:
   set style fill solid
   set xtics rotate by 45 right
 
+  set term png enhanced size 800,800 font "Arial,12" lw 2
+
   set title '(wiki markup) text length'
-  set term png enhanced size 800,600 font "Arial,12" lw 2
   set out "fontane_werke_textlen.png"
   plot 'fontane_werke.tsv' using :2:xtic(1) title '' with boxes
 
   set title 'number of contributors'
-  set term png enhanced size 800,600 font "Arial,12" lw 2
   set out "fontane_werke_contributors.png"
   plot 'fontane_werke.tsv' using :3:xtic(1) title '' with boxes
 
   set title 'number of revisions'
-  set term png enhanced size 800,600 font "Arial,12" lw 2
   set out "fontane_werke_revisions.png"
   plot 'fontane_werke.tsv' using :4:xtic(1) title '' with boxes
 
   set title 'number of backlinks'
-  set term png enhanced size 800,600 font "Arial,12" lw 2
   set out "fontane_werke_backlinks.png"
   plot 'fontane_werke.tsv' using :9:xtic(1) title '' with boxes
 
-#+END_SRC
+  set title 'date of first revision of page'
+  set out "fontane_werke_firstrev.png"
+  set ydata time
+  # 2002-05-13T13:59:54Z
+  set timefmt '%Y-%m-%dT%H:%M:%SZ'
+  plot 'fontane_werke.tsv' using :11:xtic(1) title '' with boxes
 
+#+END_SRC
 
 [[fontane_werke_backlinks.png]]
 
@@ -177,3 +173,62 @@ Plot some of the columns:
 [[fontane_werke_revisions.png]]
 
 [[fontane_werke_textlen.png]]
+
+[[fontane_werke_firstrev.png]]
+
+** Contemporaries of Fontane
+
+Download the result of the SPARQL query https://w.wiki/3xF as TSV file
+file:contemporaries.tsv and 
+
+#+BEGIN_SRC sh
+  python3 core_stable/pwb.py wiki.py --file contemporaries.tsv > fontane_contemporaries.tsv
+#+END_SRC
+
+Plot some of the columns:
+
+#+BEGIN_SRC gnuplot :results silent
+  reset
+  set datafile separator "\t"
+
+  set grid
+  set boxwidth 0.5
+  set style fill solid
+  set xtics rotate by 45 right
+
+  set term png enhanced size 800,800 font "Arial,12" lw 2
+
+  set title '(wiki markup) text length'
+  set out "fontane_contemporaries_textlen.png"
+  plot 'fontane_contemporaries.tsv' using :2:xtic(1) title '' with boxes
+
+  set title 'number of contributors'
+  set out "fontane_contemporaries_contributors.png"
+  plot 'fontane_contemporaries.tsv' using :3:xtic(1) title '' with boxes
+
+  set title 'number of revisions'
+  set out "fontane_contemporaries_revisions.png"
+  plot 'fontane_contemporaries.tsv' using :4:xtic(1) title '' with boxes
+
+  set title 'number of backlinks'
+  set out "fontane_contemporaries_backlinks.png"
+  plot 'fontane_contemporaries.tsv' using :9:xtic(1) title '' with boxes
+
+  set title 'date of first revision of page'
+  set out "fontane_contemporaries_firstrev.png"
+  set ydata time
+  # 2002-05-13T13:59:54Z
+  set timefmt '%Y-%m-%dT%H:%M:%SZ'
+  plot 'fontane_contemporaries.tsv' using :11:xtic(1) title '' with boxes
+
+#+END_SRC
+
+[[fontane_contemporaries_backlinks.png]]
+
+[[fontane_contemporaries_contributors.png]]
+
+[[fontane_contemporaries_revisions.png]]
+
+[[fontane_contemporaries_textlen.png]]
+
+[[fontane_contemporaries_firstrev.png]]

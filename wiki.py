@@ -9,6 +9,9 @@
 # Author: rja
 #
 # Changes:
+# 2019-05-19 (rja)
+# - fixed problem with missing English version
+# - added option --file
 # 2019-05-14 (rja)
 # - initial version
 
@@ -18,7 +21,7 @@ import collections
 import sys
 import argparse
 
-version = "0.0.2"
+version = "0.0.3"
 
 # returns the following page stats:
 # - length = number of characters
@@ -84,6 +87,7 @@ if __name__ == '__main__':
     parser.add_argument('-l', '--languages', type=str, metavar="ARTICLE", help='stats for articles versions in all available languages')
     parser.add_argument('-c', '--category', type=str, metavar="CATEGORY", help='stats for articles of a category')
     parser.add_argument('-s', '--separator', type=str, metavar="SEP", help='output column separator', default='\t')
+    parser.add_argument('-f', '--file', type=argparse.FileType('r', encoding='utf-8'), metavar="FILE", help='file to use as input')
     parser.add_argument('-t', '--test', type=str, metavar="ARTICLE", help='test article')
     parser.add_argument('-v', '--version', action="version", version="%(prog)s " + version)
     args = parser.parse_args()
@@ -101,41 +105,72 @@ if __name__ == '__main__':
 
         for i, a in enumerate(page.articles(namespaces = [0])):
             stats = get_page_stats(a)
-            # FIXME: a.title does not work well
-            print_stats(i, a.title, stats, args.separator)
+            print_stats(i, a.title(), stats, args.separator)
 
     if args.languages:
-        # Given the (English) name of an article, extract statistics
+        # Given the (German) name of an article, extract statistics
         # for all available language versions.
         #
-        # FIXME: We start with the English Wikipedia, since in the
-        # German Wikipedia, "en" and "simple" are both abbreviated
-        # "en".
-        site = pywikibot.Site("en", "wikipedia")
+        site = pywikibot.Site("de", "wikipedia")
         page = pywikibot.Page(site, args.languages)
 
-        # FIXME: For some reason, queried site itself is missing :-(
-        sitestats = {site.lang : get_page_stats(page)}
+        # FIXME: queried language itself is missing :-(
+        sitestats = {site.code : get_page_stats(page)}
 
         # get stats for other sites
         for langlink in page.langlinks():
-            sitestats[langlink.site.lang] = get_page_stats(pywikibot.Page(langlink.site, langlink.title))
+            # we are using site.code, since site.lang can be the same
+            # for different wikis (e.g., wikipedia:en and
+            # wikipedia:simple both have "en" as site.lang)
+            sitestats[langlink.site.code] = get_page_stats(pywikibot.Page(langlink.site, langlink.title))
 
         # print stats
         for i, lang in enumerate(sorted(sitestats)):
             print_stats(i, lang, sitestats[lang], args.separator)
 
+    if args.file:
+        # given a file with (currently) three columns:
+        # http://www.wikidata.org/entity/Q34787   Friedrich Engels        168
+        # print statistics for the entity in column two from the German Wikipedia
+
+        site = pywikibot.Site("de", "wikipedia")
+
+        i = 0
+        for line in args.file:
+            s, desc, linkcount = line.strip().split('\t')
+            # skip first line, if it is header
+            if not (s == "s" and desc == "desc"):
+                # get stats for "desc" (= title of Wikipedia page)
+                page = pywikibot.Page(site, desc)
+                
+                print_stats(i, desc, get_page_stats(page), args.separator)
+                i = i + 1
+        
     if args.test:
         # test Wikidata
         site = pywikibot.Site("de", "wikipedia")
         page = pywikibot.Page(site, args.test)
 
-        # datetime of first revision
-        for r in page.revisions():
-            print(r.revid, r.timestamp)
+        # test .title()
+        site = pywikibot.Site("de", "wikipedia")
+        page = pywikibot.Category(site, args.test)
+
+        # check, whether this really is a category page
+        if not page.is_categorypage():
+            sys.exit(args.category + " is not a category page")
+
+        for i, a in enumerate(page.articles(namespaces = [0])):
+            # FIXME: a.title does not work well
+            print(i, a.title())
+
+        # test dbName()
+        if False:
+            print("--- starting with de")
+            for langlink in page.langlinks():
+                print(langlink.site, langlink.site.lang, langlink.site.dbName(), langlink.site.code)
 
 
-        # Wikidata
+        # test Wikidata
         if False:
             data = page.data_item()
             claims = data.get()["claims"] # claims, labels, aliases, descriptions, sitelinks
