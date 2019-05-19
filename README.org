@@ -147,7 +147,7 @@ Plot some of the columns:
   set style fill solid
   set xtics rotate by 45 right
 
-  set term png enhanced size 800,800 font "Arial,12" lw 2
+  set term png enhanced size 800,800 font "Arial,9" lw 2
 
   set title '(wiki markup) text length'
   set out "fontane_contemporaries_textlen.png"
