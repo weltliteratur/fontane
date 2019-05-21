@@ -24,17 +24,19 @@ import argparse
 version = "0.0.3"
 
 # returns the following page stats:
-# - length = number of characters
-# - number of top-level sections
-# - number of language editions
-# - number of outgoing links
+# - number of characters of the (Wiki markup) text
+# - number of contributors
+# - number of revisions
 # - number of outgoing external links
 # - number of outgoing interwiki links
-# - number of ingoing (backlinks)
+# - number of language editions
+# - number of linked pages
+# - number of ingoing links (backlinks)
 # - number of categories
-# - number of revisions
-# - number of contributors
 # - datetime of first revision
+# TODO:
+# - number of top-level sections
+# - number of outgoing links
 def get_page_stats(page):
     d = collections.OrderedDict() # keep insertion order
 
@@ -84,19 +86,27 @@ if __name__ == '__main__':
 
     # parse command line arguments
     parser = argparse.ArgumentParser(description='Extract stats from Wikipedia', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-l', '--languages', type=str, metavar="ARTICLE", help='stats for articles versions in all available languages')
-    parser.add_argument('-c', '--category', type=str, metavar="CATEGORY", help='stats for articles of a category')
-    parser.add_argument('-s', '--separator', type=str, metavar="SEP", help='output column separator', default='\t')
+    # what to do
+    parser.add_argument('-l', '--languages', type=str, metavar="ART", help='stats for articles versions in all available languages')
+    parser.add_argument('-c', '--category', type=str, metavar="CAT", help='stats for articles of a category')
     parser.add_argument('-f', '--file', type=argparse.FileType('r', encoding='utf-8'), metavar="FILE", help='file to use as input')
-    parser.add_argument('-t', '--test', type=str, metavar="ARTICLE", help='test article')
+    parser.add_argument('-t', '--test', type=str, metavar="ART", help='test article')
+    # options
+    parser.add_argument('-s', '--sep', type=str, metavar="SEP", help='output column separator', default='\t')
+    parser.add_argument('-L', '--lang', type=str, metavar="LANG", help='language edition to be used', default='de')
+    parser.add_argument('-S', '--site', type=str, metavar="SITE", help='site to be used', default='wikipedia')
     parser.add_argument('-v', '--version', action="version", version="%(prog)s " + version)
     args = parser.parse_args()
 
+    # We are using the German language edition of Wikipedia for all
+    # queries.
+    site = pywikibot.Site(args.lang, args.site)
+
+
     # decide what to do
     if args.category:
-        # given the (German) name of a category, extract statistics
-        # for all articles belonging to that category
-        site = pywikibot.Site("de", "wikipedia")
+        # Given the (German) name of a category, extract statistics
+        # for all articles belonging to that category.
         page = pywikibot.Category(site, args.category)
 
         # check, whether this really is a category page
@@ -109,15 +119,14 @@ if __name__ == '__main__':
 
     if args.languages:
         # Given the (German) name of an article, extract statistics
-        # for all available language versions.
+        # for all available language editions.
         #
-        site = pywikibot.Site("de", "wikipedia")
         page = pywikibot.Page(site, args.languages)
 
-        # FIXME: queried language itself is missing :-(
+        # FIXME: queried language itself is missing, so we add it here :-(
         sitestats = {site.code : get_page_stats(page)}
 
-        # get stats for other sites
+        # get stats for other language editions
         for langlink in page.langlinks():
             # we are using site.code, since site.lang can be the same
             # for different wikis (e.g., wikipedia:en and
@@ -133,29 +142,25 @@ if __name__ == '__main__':
         # http://www.wikidata.org/entity/Q34787   Friedrich Engels        168	https://de.wikipedia.org/wiki/Friedrich_Engels
         # print statistics for the entity in column two from the German Wikipedia
 
-        site = pywikibot.Site("de", "wikipedia")
-
         i = 0
         for line in args.file:
             s, desc, linkcount, url = line.strip().split('\t')
-            # skip first line, if it is header
+            # skip first line, if it is the header
             if not (s == "s" and desc == "desc"):
-                # get stats for url
+                # get stats for URL
                 #
-                # FIXME: we manually extract the name of the page, it
-                # would be better to do this automatically
+                # FIXME: we manually extract the name of the page from
+                # its URL, it would be better to do use the correct
+                # API method
                 name = url[len("https://de.wikipedia.org/wiki/"):]
                 page = pywikibot.Page(site, name)
                 print_stats(i, desc, get_page_stats(page), args.separator)
                 i = i + 1
-        
-    if args.test:
-        # test Wikidata
-        site = pywikibot.Site("de", "wikipedia")
-        page = pywikibot.Page(site, args.test)
 
-        # test .title()
-        site = pywikibot.Site("de", "wikipedia")
+    if args.test:
+        # TODO: some code to test the API ... remove upon cleanup
+
+        # test .title() for category
         page = pywikibot.Category(site, args.test)
 
         # check, whether this really is a category page

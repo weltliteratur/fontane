@@ -1,6 +1,6 @@
 #+TITLE: Theodor Fontane on Wikipedia
 #+AUTHOR: Frank Fischer and Robert Jäschke
-#+EMAIL: 
+#+EMAIL:
 #+LANGUAGE: en
 #+OPTIONS: toc:nil ':t H:5
 #+STARTUP: hidestars overview
@@ -57,12 +57,12 @@ Plot some of the columns:
   # 2002-05-13T13:59:54Z
   set timefmt '%Y-%m-%dT%H:%M:%SZ'
   set format y '%Y'
-  set ylabel 'year' 
+  set ylabel 'year'
   plot 'interwiki.tsv' using :11:xtic(1) title '' with boxes
 
 #+END_SRC
 
-** text length (wiki markup) 
+** text length (wiki markup)
 
 [[interwiki_textlen.png]]
 
@@ -120,8 +120,8 @@ Plot some of the columns:
   set ylabel 'number of backlinks'
   plot 'works.tsv' using :9:xtic(1) title '' with boxes
 
-  set out "works_languages.png" 
-  set ylabel 'number of language editions' 
+  set out "works_languages.png"
+  set ylabel 'number of language editions'
   plot 'works.tsv' using :7:xtic(1) title '' with boxes
 
   set out "works_firstrev.png"
@@ -129,12 +129,12 @@ Plot some of the columns:
   # 2002-05-13T13:59:54Z
   set timefmt '%Y-%m-%dT%H:%M:%SZ'
   set format y '%Y'
-  set ylabel 'year' 
+  set ylabel 'year'
   plot 'works.tsv' using :11:xtic(1) title '' with boxes
 #+END_SRC
 
 
-** text length (wiki markup) 
+** text length (wiki markup)
 
 [[works_textlen.png]]
 
@@ -157,7 +157,7 @@ Plot some of the columns:
 * Contemporaries of Fontane
 
 Download the result of the SPARQL query https://w.wiki/48T as TSV file
-[[contemporaries_wikidata.tsv]] and 
+[[contemporaries_wikidata.tsv]] and
 
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --file contemporaries_wikidata.tsv > contemporaries.tsv
@@ -207,7 +207,7 @@ Plot some of the columns:
 
 #+END_SRC
 
-** text length (wiki markup) 
+** text length (wiki markup)
 
 [[contemporaries_textlen.png]]
 
