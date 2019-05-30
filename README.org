@@ -18,48 +18,16 @@ Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywik
 
 * "Theodor Fontane" articles in different Wikipedia language editions
 
+Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
+
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --languages "Theodor Fontane" > interwiki.tsv
 #+END_SRC
 
-Plot some of the columns:
+Plot some of the columns using [[file:interwiki.gpi][interwiki.gpi]]:
 
-#+BEGIN_SRC gnuplot :results silent
-  reset
-  set datafile separator "\t"
-
-  set grid
-  set boxwidth 0.5
-  set style fill solid
-  set xtics rotate by 45 right
-  set xlabel 'Wikipedia language edition'
-
-  set term png enhanced size 800,600 font "Arial,10" lw 2
-
-  set out "interwiki_textlen.png"
-  set ylabel 'number of characters'
-  plot 'interwiki.tsv' using :2:xtic(1) title '' with boxes
-
-  set out "interwiki_contributors.png"
-  set ylabel 'number of contributors'
-  plot 'interwiki.tsv' using :3:xtic(1) title '' with boxes
-
-  set out "interwiki_revisions.png"
-  set ylabel 'number of revisions'
-  plot 'interwiki.tsv' using :4:xtic(1) title '' with boxes
-
-  set out "interwiki_backlinks.png"
-  set ylabel 'number of backlinks'
-  plot 'interwiki.tsv' using :9:xtic(1) title '' with boxes
-
-  set out "interwiki_firstrev.png"
-  set ydata time
-  # 2002-05-13T13:59:54Z
-  set timefmt '%Y-%m-%dT%H:%M:%SZ'
-  set format y '%Y'
-  set ylabel 'year'
-  plot 'interwiki.tsv' using :11:xtic(1) title '' with boxes
-
+#+BEGIN_SRC sh
+  gnuplot interwiki.gpi
 #+END_SRC
 
 ** text length (wiki markup)
@@ -84,55 +52,20 @@ Plot some of the columns:
 
 * Articles of Fontane's works (in the German Wikipedia)
 
-starting point: https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane
+Starting point is the Wikipedia category
+https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane. 
+
+Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
 
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --category "Kategorie:Werk_von_Theodor_Fontane" > works.tsv
 #+END_SRC
 
-Plot some of the columns:
+Plot some of the columns using [[file:works.gpi][works.gpi]]:
 
-#+BEGIN_SRC gnuplot :results silent
-  reset
-  set datafile separator "\t"
-
-  set grid
-  set boxwidth 0.5
-  set style fill solid
-  set xtics rotate by 45 right
-  set xlabel "Fontane's works"
-
-  set term png enhanced size 800,800 font "Arial,10" lw 2
-
-  set out "works_textlen.png"
-  set ylabel 'number of characters'
-  plot 'works.tsv' using :2:xtic(1) title '' with boxes
-
-  set out "works_contributors.png"
-  set ylabel 'number of contributors'
-  plot 'works.tsv' using :3:xtic(1) title '' with boxes
-
-  set out "works_revisions.png"
-  set ylabel 'number of revisions'
-  plot 'works.tsv' using :4:xtic(1) title '' with boxes
-
-  set out "works_backlinks.png"
-  set ylabel 'number of backlinks'
-  plot 'works.tsv' using :9:xtic(1) title '' with boxes
-
-  set out "works_languages.png"
-  set ylabel 'number of language editions'
-  plot 'works.tsv' using :7:xtic(1) title '' with boxes
-
-  set out "works_firstrev.png"
-  set ydata time
-  # 2002-05-13T13:59:54Z
-  set timefmt '%Y-%m-%dT%H:%M:%SZ'
-  set format y '%Y'
-  set ylabel 'year'
-  plot 'works.tsv' using :11:xtic(1) title '' with boxes
+#+BEGIN_SRC sh
+  gnuplot works.gpi
 #+END_SRC
-
 
 ** text length (wiki markup)
 

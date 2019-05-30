@@ -1,0 +1,54 @@
+reset
+set datafile separator "\t"
+set encoding utf8
+
+set grid ytics
+set boxwidth 0.5
+set style fill solid
+set xtics rotate by 45 right
+set xlabel 'Wikipedia Sprachversion'
+
+set ylabel 'Zeichenanzahl'
+set term png enhanced size 800,600 font "Arial,10" lw 2
+set out "interwiki_textlen.png"
+plot "< sort -t'\t' -rnk2 interwiki.tsv" using :2:xtic(1) title '' with boxes
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "interwiki_textlen.svg"
+replot
+
+set ylabel 'Anzahl Bearbeiter'
+set term png enhanced size 800,600 font "Arial,10" lw 2
+set out "interwiki_contributors.png"
+plot "< sort -t'\t' -rnk3 interwiki.tsv" using :3:xtic(1) title '' with boxes
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "interwiki_contributors.svg"
+replot
+
+set ylabel 'Anzahl Überarbeitungen'
+set term png enhanced size 800,600 font "Arial,10" lw 2
+set out "interwiki_revisions.png"
+plot "< sort -t'\t' -rnk4 interwiki.tsv" using :4:xtic(1) title '' with boxes
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "interwiki_revisions.svg"
+replot
+
+set ylabel 'Anzahl Backlinks'
+set term png enhanced size 800,600 font "Arial,10" lw 2
+set out "interwiki_backlinks.png"
+plot "< sort -t'\t' -rnk9 interwiki.tsv" using :9:xtic(1) title '' with boxes
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "interwiki_backlinks.svg"
+replot
+
+set out "interwiki_firstrev.png"
+set ydata time
+# 2002-05-13T13:59:54Z
+set timefmt '%Y-%m-%dT%H:%M:%SZ'
+set format y '%Y'
+set ylabel 'Jahr der Erstellung der Seite'
+plot "< sort -t'\t' -k11 interwiki.tsv" using :11:xtic(1) title '' with boxes
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "interwiki_firstrev.svg"
+replot
+
+set output
