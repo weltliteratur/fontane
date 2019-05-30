@@ -2,52 +2,52 @@ reset
 set datafile separator "\t"
 set encoding utf8
 
-set grid ytics
+set grid
 set boxwidth 0.5
 set style fill solid
 set xtics rotate by 45 right
-set xlabel "Fontanes Werk" 
-# offset 0,8
+set ylabel "Fontanes Werk" offset screen .3
+set lmargin at screen 0.6
 
-set ylabel 'Zeichenanzahl'
+set xlabel 'Zeichenanzahl'
 set term png enhanced size 800,600 font "Arial,10" lw 2
 set out "works_textlen.png"
-plot "< sort -t'\t' -rnk2 works.tsv" using :2:xtic(1) title '' with boxes
-set term svg size 640,640 dynamic enhanced font "Arial,10" lw 2
+plot "< sort -t'\t' -nk2 works.tsv" using 2:0:ytic(1) title '' with p pt 7
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "works_textlen.svg"
 replot
 
-set ylabel 'Anzahl Bearbeiter'
+set xlabel 'Anzahl Bearbeiter'
 set term png enhanced size 800,600 font "Arial,10" lw 2
 set out "works_contributors.png"
-plot "< sort -t'\t' -rnk3 works.tsv" using :3:xtic(1) title '' with boxes
+plot "< sort -t'\t' -nk3 works.tsv" using 3:0:ytic(1) title '' with p pt 7
 set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "works_contributors.svg"
 replot
 
-set ylabel 'Anzahl Überarbeitungen'
+set xlabel 'Anzahl Überarbeitungen'
 set term png enhanced size 800,600 font "Arial,10" lw 2
 set out "works_revisions.png"
-plot "< sort -t'\t' -rnk4 works.tsv" using :4:xtic(1) title '' with boxes
+plot "< sort -t'\t' -nk4 works.tsv" using 4:0:ytic(1) title '' with p pt 7
 set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "works_revisions.svg"
 replot
 
-set ylabel 'Anzahl Backlinks'
+set xlabel 'Anzahl Backlinks'
 set term png enhanced size 800,600 font "Arial,10" lw 2
 set out "works_backlinks.png"
-plot "< sort -t'\t' -rnk9 works.tsv" using :9:xtic(1) title '' with boxes
+plot "< sort -t'\t' -nk9 works.tsv" using 9:0:ytic(1) title '' with p pt 7
 set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "works_backlinks.svg"
 replot
 
 set out "works_firstrev.png"
-set ydata time
+set xdata time
 # 2002-05-13T13:59:54Z
 set timefmt '%Y-%m-%dT%H:%M:%SZ'
-set format y '%Y'
-set ylabel 'Jahr der Erstellung der Seite'
-plot "< sort -t'\t' -k11 works.tsv" using :11:xtic(1) title '' with boxes
+set format x '%Y'
+set xlabel 'Jahr der Erstellung der Seite'
+plot "< sort -t'\t' -rk11 works.tsv" using 11:0:ytic(1) title '' with p pt 7
 set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "works_firstrev.svg"
 replot
