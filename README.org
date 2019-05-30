@@ -63,7 +63,7 @@ Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
 
 Plot some of the columns using [[file:works.gpi][works.gpi]]:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh 
   gnuplot works.gpi
 #+END_SRC
 
@@ -90,54 +90,16 @@ Plot some of the columns using [[file:works.gpi][works.gpi]]:
 * Contemporaries of Fontane
 
 Download the result of the SPARQL query https://w.wiki/48T as TSV file
-[[contemporaries_wikidata.tsv]] and
+[[contemporaries_wikidata.tsv]] and then Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
 
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --file contemporaries_wikidata.tsv > contemporaries.tsv
 #+END_SRC
 
-Plot some of the columns:
+Plot some of the columns using [[file:contemporaries.gpi][contemporaries.gpi]]:
 
-#+BEGIN_SRC gnuplot :results silent
-  reset
-  set datafile separator "\t"
-
-  set grid
-  set boxwidth 0.5
-  set style fill solid
-  set xtics rotate by 45 right
-  set ylabel "Fontane's contemporaries"
-
-  set term png enhanced size 800,800 font "Arial,10" lw 2
-
-  set out "contemporaries_textlen.png"
-  set ylabel 'number of characters'
-  plot 'contemporaries.tsv' using :2:xtic(1) title '' with boxes
-
-  set out "contemporaries_contributors.png"
-  set ylabel 'number of contributors'
-  plot 'contemporaries.tsv' using :3:xtic(1) title '' with boxes
-
-  set out "contemporaries_revisions.png"
-  set ylabel 'number of revisions'
-  plot 'contemporaries.tsv' using :4:xtic(1) title '' with boxes
-
-  set out "contemporaries_backlinks.png"
-  set ylabel 'number of backlinks'
-  plot 'contemporaries.tsv' using :9:xtic(1) title '' with boxes
-
-  set out "contemporaries_languages.png"
-  set ylabel 'number of language editions'
-  plot 'contemporaries.tsv' using :7:xtic(1) title '' with boxes
-
-  set out "contemporaries_firstrev.png"
-  set ydata time
-  # 2002-05-13T13:59:54Z
-  set timefmt '%Y-%m-%dT%H:%M:%SZ'
-  set format y '%Y'
-  set ylabel 'year'
-  plot 'contemporaries.tsv' using :11:xtic(1) title '' with boxes
-
+#+BEGIN_SRC sh 
+  gnuplot contemporaries.gpi
 #+END_SRC
 
 ** text length (wiki markup)
