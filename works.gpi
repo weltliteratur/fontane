@@ -5,7 +5,7 @@ set encoding utf8
 set grid
 set boxwidth 0.5
 set style fill solid
-set xtics rotate by 45 right
+#set xtics rotate by 45 right
 set ylabel "Fontanes Werk" offset screen .3
 set lmargin at screen 0.6
 
@@ -39,6 +39,15 @@ set out "works_backlinks.png"
 plot "< sort -t'\t' -nk9 works.tsv" using 9:0:ytic(1) title '' with p pt 7
 set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "works_backlinks.svg"
+replot
+
+set xlabel 'Anzahl Sprachversionen'
+set term png enhanced size 800,600 font "Arial,10" lw 2
+set out "works_languages.png"
+# add one to include the current language edition
+plot "< sort -t'\t' -nk7 works.tsv" using ($7+1):0:ytic(1) title '' with p pt 7
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "works_languages.svg"
 replot
 
 set xlabel 'Jahr der Erstellung der Seite'

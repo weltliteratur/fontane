@@ -83,6 +83,10 @@ Plot some of the columns using [[file:works.gpi][works.gpi]]:
 
 [[works_backlinks.png]]
 
+** number of language editions
+
+[[works_languages.png]]
+
 ** date of the first version of a page
 
 [[works_firstrev.png]]
@@ -90,7 +94,8 @@ Plot some of the columns using [[file:works.gpi][works.gpi]]:
 * Contemporaries of Fontane
 
 Download the result of the SPARQL query https://w.wiki/48T as TSV file
-[[contemporaries_wikidata.tsv]] and then Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
+[[contemporaries_wikidata.tsv]] and then extract data from Wikipedia using
+[[file:wiki.py][wiki.py]]:
 
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --file contemporaries_wikidata.tsv > contemporaries.tsv
@@ -117,6 +122,10 @@ Plot some of the columns using [[file:contemporaries.gpi][contemporaries.gpi]]:
 ** number of backlinks
 
 [[contemporaries_backlinks.png]]
+
+** number of language editions
+
+[[contemporaries_languages.png]]
 
 ** date of the first version of a page
 
