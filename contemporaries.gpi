@@ -2,63 +2,67 @@ reset
 set datafile separator "\t"
 set encoding utf8
 
-set grid
+FONT="Arial,9"
+LFONT="Arial,13"
+
+set grid lt 1 lw .5 lc rgb "#dddddd"
+set xtics nomirror
 set boxwidth 0.5
 set style fill solid
 #set xtics rotate by 45 right
-set ylabel "Fontanes Zeitgenossen" offset screen .1
+set ylabel font LFONT "Fontanes Zeitgenossen" offset screen .1
 set lmargin at screen 0.25
 
-set xlabel 'Zeichenanzahl'
-set term png enhanced size 800,600 font "Arial,10" lw 2
+set xlabel font LFONT 'Zeichenanzahl'
+set term png enhanced size 800,600 font FONT lw 2
 set out "contemporaries_textlen.png"
 plot "< sort -t'\t' -nk2 contemporaries.tsv" using 2:0:ytic(1) title '' with p pt 7
-set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "contemporaries_textlen.svg"
 replot
 
-set xlabel 'Anzahl Bearbeiter'
-set term png enhanced size 800,600 font "Arial,10" lw 2
+set xlabel font LFONT 'Anzahl Bearbeiter'
+set term png enhanced size 800,600 font FONT lw 2
 set out "contemporaries_contributors.png"
 plot "< sort -t'\t' -nk3 contemporaries.tsv" using 3:0:ytic(1) title '' with p pt 7
-set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "contemporaries_contributors.svg"
 replot
 
-set xlabel 'Anzahl Überarbeitungen'
-set term png enhanced size 800,600 font "Arial,10" lw 2
+set xlabel font LFONT 'Anzahl Überarbeitungen'
+set term png enhanced size 800,600 font FONT lw 2
 set out "contemporaries_revisions.png"
 plot "< sort -t'\t' -nk4 contemporaries.tsv" using 4:0:ytic(1) title '' with p pt 7
-set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "contemporaries_revisions.svg"
 replot
 
-set xlabel 'Anzahl Backlinks'
-set term png enhanced size 800,600 font "Arial,10" lw 2
+set xlabel font LFONT 'Anzahl Backlinks'
+set term png enhanced size 800,600 font FONT lw 2
 set out "contemporaries_backlinks.png"
 plot "< sort -t'\t' -nk9 contemporaries.tsv" using 9:0:ytic(1) title '' with p pt 7
-set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "contemporaries_backlinks.svg"
 replot
 
-set xlabel 'Anzahl Sprachversionen'
-set term png enhanced size 800,600 font "Arial,10" lw 2
+set xlabel font LFONT 'Anzahl Sprachversionen'
+set term png enhanced size 800,600 font FONT lw 2
 set out "contemporaries_languages.png"
 # add one to include the current language edition
 plot "< sort -t'\t' -nk7 contemporaries.tsv" using ($7+1):0:ytic(1) title '' with p pt 7
-set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "contemporaries_languages.svg"
 replot
 
-set xlabel 'Jahr der Erstellung der Seite'
+set xlabel font LFONT 'Jahr der Erstellung der Seite'
 set xdata time
 # 2002-05-13T13:59:54Z
 set timefmt '%Y-%m-%dT%H:%M:%SZ'
 set format x '%Y'
-set term png enhanced size 800,600 font "Arial,10" lw 2
+set term png enhanced size 800,600 font FONT lw 2
 set out "contemporaries_firstrev.png"
 plot "< sort -t'\t' -rk11 contemporaries.tsv" using 11:0:ytic(1) title '' with p pt 7
-set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "contemporaries_firstrev.svg"
 replot
 
