@@ -10,7 +10,7 @@ set xtics nomirror
 set boxwidth 0.5
 set style fill solid
 #set xtics rotate by 45 right
-set ylabel font LFONT "Fontanes Zeitgenossen" offset screen .1
+set ylabel font LFONT "Fontanes Zeitgenossen" offset screen .05
 set lmargin at screen 0.25
 
 set xlabel font LFONT 'Zeichenanzahl'
