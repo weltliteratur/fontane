@@ -9,6 +9,12 @@
 
 * Preparation
 
+Install the Python library [[https://pypi.org/project/pageviewapi/][pageviewapi]]:
+
+#+BEGIN_SRC sh
+  pip install git+https://github.com/Commonists/pageview-api.git
+#+END_SRC
+
 Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywikibot]], a Python library for interacting with Wikipedia:
 
 #+BEGIN_SRC sh
