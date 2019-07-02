@@ -9,7 +9,7 @@
 
 * Preparation
 
-Install the Python library [[https://pypi.org/project/pageviewapi/][pageviewapi]]:
+Install the Python library [[https://pypi.org/project/pageviewapi/][pageviewapi]], that uses the [[https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews][PageView API]] from Wikimedia Foundation.
 
 #+BEGIN_SRC sh
   pip install git+https://github.com/Commonists/pageview-api.git
