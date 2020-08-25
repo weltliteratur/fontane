@@ -122,7 +122,7 @@ if __name__ == '__main__':
     parser.add_argument('-S', '--site', type=str, metavar="SITE", help='site to be used', default='wikipedia')
     parser.add_argument('-v', '--version', action="version", version="%(prog)s " + version)
     parser.add_argument('-p', '--start', type=str, metavar="START", help='format: YYYYMMDD - start date for counting page views', default='20190101')
-    parser.add_argument('-q', '--end', type=str, metavar="END", help='format: YYYYMMDD - end date for counting page views', default='20190701')
+    parser.add_argument('-q', '--end', type=str, metavar="END", help='format: YYYYMMDD - end date for counting page views', default='20191231')
     args = parser.parse_args()
 
     # We are using the German language edition of Wikipedia for all
