@@ -140,7 +140,7 @@ if __name__ == '__main__':
             sys.exit(args.category + " is not a category page")
 
         for i, a in enumerate(page.articles(namespaces=[0])):
-            stats = get_page_stats(args.start, args.end, end_date, a)
+            stats = get_page_stats(args.start, args.end, a)
             print_stats(i, a.title(), stats, args.sep)
 
     if args.languages:
