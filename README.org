@@ -12,7 +12,7 @@
 Install the Python library [[https://pypi.org/project/pageviewapi/][pageviewapi]], that uses the [[https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews][PageView API]] from Wikimedia Foundation.
 
 #+BEGIN_SRC sh
-  pip install git+https://github.com/Commonists/pageview-api.git
+  pip3 install git+https://github.com/Commonists/pageview-api.git
 #+END_SRC
 
 Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywikibot]], a Python library for interacting with Wikipedia:
@@ -22,6 +22,8 @@ Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywik
   tar xzf core_stable.tar.gz
 #+END_SRC
 
+#+RESULTS:
+
 - Then generate your bot password on
   https://www.mediawiki.org/wiki/Special:BotPasswords (or the
   corresponding page on another wiki).
@@ -30,12 +32,12 @@ Download and extract [[https://www.mediawiki.org/wiki/Manual:Pywikibot/en][Pywik
   Valhallasw@my-botpassword-name is mysupersecretbotpassword/.
 - Do not close this window until you saved the password in your
   password file.
-- Run ~python pwb.py generate_user_files~ and use your credentials in
+- Run ~python3 pwb.py generate_user_files~ and use your credentials in
   the prompt.
 - After the user files have been generated ~user-password.py~ and
   ~user-config.py~ are available, which should contain the
   credentials.
-- Run ~python pwb.py login~ for verification.
+- Run ~python3 pwb.py login~ for verification.
 
 * "Theodor Fontane" articles in different Wikipedia language editions
 
@@ -44,6 +46,8 @@ Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
 #+BEGIN_SRC sh
   python3 core_stable/pwb.py wiki.py --languages "Theodor Fontane" > interwiki.tsv
 #+END_SRC
+
+#+RESULTS:
 
 Plot some of the columns using [[file:interwiki.gpi][interwiki.gpi]]:
 
@@ -74,7 +78,7 @@ Plot some of the columns using [[file:interwiki.gpi][interwiki.gpi]]:
 * Articles of Fontane's works (in the German Wikipedia)
 
 Starting point is the Wikipedia category
-https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane. 
+https://de.wikipedia.org/wiki/Kategorie:Werk_von_Theodor_Fontane.
 
 Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
 
@@ -84,7 +88,7 @@ Extract data from Wikipedia using [[file:wiki.py][wiki.py]]:
 
 Plot some of the columns using [[file:works.gpi][works.gpi]]:
 
-#+BEGIN_SRC sh 
+#+BEGIN_SRC sh
   gnuplot works.gpi
 #+END_SRC
 
@@ -124,7 +128,7 @@ Download the result of the SPARQL query https://w.wiki/48T as TSV file
 
 Plot some of the columns using [[file:contemporaries.gpi][contemporaries.gpi]]:
 
-#+BEGIN_SRC sh 
+#+BEGIN_SRC sh
   gnuplot contemporaries.gpi
 #+END_SRC
 

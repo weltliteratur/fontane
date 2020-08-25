@@ -9,6 +9,8 @@
 # Author: rja
 #
 # Changes:
+# 2020-08-24 (rja)
+# - smaller cleanups
 # 2019-07-02 (ms)
 # - added column page views in stats
 # - fixed bug (sep instead of separator)
@@ -18,14 +20,13 @@
 # 2019-05-14 (rja)
 # - initial version
 
-import re
 import pywikibot
 import collections
 import sys
 import argparse
 import pageviewapi
 
-version = "0.0.3"
+version = "0.0.4"
 
 
 # returns the following page stats:
@@ -47,26 +48,23 @@ def get_page_stats(start_date, end_date, page):
 
     # Wikipedia
     # see https://doc.wikimedia.org/pywikibot/master/api_ref/pywikibot.html#module-pywikibot.page
-    d["textlen"] = len(page.text)  # FIXME: use plain text
-    d["contribs"] = len(set([c for c in page.contributors()]))  # TODO: ignore IP addresses and bots?
-    d["revisions"] = len([r for r in page.revisions()])
-    d["extlinks"] = len([e for e in page.extlinks()])  # TODO: figure out meaning
-    d["interlinks"] = len(get_interwiki(page))  # of all those different
-    d["interlang"] = len([i for i in page.langlinks()])  # types of links
-    d["linkedpag"] = len([i for i in page.linkedPages(namespaces=[0])])  #
-    d["backlinks"] = len([b for b in page.backlinks(namespaces=[0])])  # 0 = article namespace
-    d["categories"] = len([c for c in page.categories()])  # TODO: some not meaningful
-    d["firstrev"] = get_first_revision(page).timestamp
+    d["textlen"]    = len(page.text)                                     # FIXME: use plain text
+    d["contribs"]   = len(set([c for c in page.contributors()]))         # TODO: ignore IP addresses and bots?
+    d["revisions"]  = len([r for r in page.revisions()])
+    d["extlinks"]   = len([e for e in page.extlinks()])                  # TODO: figure out meaning
+    d["interlinks"] = len(get_interwiki(page))                           # of all those different
+    d["interlang"]  = len([i for i in page.langlinks()])                 # types of links
+    d["linkedpag"]  = len([i for i in page.linkedPages(namespaces=[0])]) #
+    d["backlinks"]  = len([b for b in page.backlinks(namespaces=[0])])   # 0 = article namespace
+    d["categories"] = len([c for c in page.categories()])                # TODO: some not meaningful
+    d["firstrev"]   = get_first_revision(page).timestamp
     # d["title"] = page.title()
     # d["country_code"] = page.site.code
 
     # Wikidata
     # see https://doc.wikimedia.org/pywikibot/master/api_ref/pywikibot.html#pywikibot.ItemPage
-    d["claims"] = len(
-        page.data_item().get()["claims"])  # available keys: claims, labels, aliases, descriptions, sitelinks
-
-    # see https://pypi.org/project/pageviewapi/
-    d["pageviews"] = get_pageviews(start_date, end_date, page)
+    d["claims"]    = len(page.data_item().get()["claims"])               # available keys: claims, labels, aliases, descriptions, sitelinks
+    d["pageviews"] = get_pageviews(start_date, end_date, page)           # see https://pypi.org/project/pageviewapi/
 
     return d
 
@@ -112,24 +110,19 @@ def print_stats(i, name, stats, sep):
 if __name__ == '__main__':
 
     # parse command line arguments
-    parser = argparse.ArgumentParser(description='Extract stats from Wikipedia',
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Extract stats from Wikipedia', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # what to do
-    parser.add_argument('-l', '--languages', type=str, metavar="ART",
-                        help='stats for articles versions in all available languages')
+    parser.add_argument('-l', '--languages', type=str, metavar="ART", help='stats for articles versions in all available languages')
     parser.add_argument('-c', '--category', type=str, metavar="CAT", help='stats for articles of a category')
-    parser.add_argument('-f', '--file', type=argparse.FileType('r', encoding='utf-8'), metavar="FILE",
-                        help='file to use as input')
+    parser.add_argument('-f', '--file', type=argparse.FileType('r', encoding='utf-8'), metavar="FILE", help='file to use as input')
     parser.add_argument('-t', '--test', type=str, metavar="ART", help='test article')
     # options
     parser.add_argument('-s', '--sep', type=str, metavar="SEP", help='output column separator', default='\t')
     parser.add_argument('-L', '--lang', type=str, metavar="LANG", help='language edition to be used', default='de')
     parser.add_argument('-S', '--site', type=str, metavar="SITE", help='site to be used', default='wikipedia')
     parser.add_argument('-v', '--version', action="version", version="%(prog)s " + version)
-    parser.add_argument('-p', '--start', type=str, metavar="START",
-                        help='format: YYYYMMDD - start date for counting page views', default='20190101')
-    parser.add_argument('-q', '--end', type=str, metavar="END",
-                        help='format: YYYYMMDD - end date for counting page views', default='20190701')
+    parser.add_argument('-p', '--start', type=str, metavar="START", help='format: YYYYMMDD - start date for counting page views', default='20190101')
+    parser.add_argument('-q', '--end', type=str, metavar="END", help='format: YYYYMMDD - end date for counting page views', default='20190701')
     args = parser.parse_args()
 
     # We are using the German language edition of Wikipedia for all
@@ -164,8 +157,7 @@ if __name__ == '__main__':
             # we are using site.code, since site.lang can be the same
             # for different wikis (e.g., wikipedia:en and
             # wikipedia:simple both have "en" as site.lang)
-            sitestats[langlink.site.code] = get_page_stats(args.start, args.end,
-                                                           pywikibot.Page(langlink.site, langlink.title))
+            sitestats[langlink.site.code] = get_page_stats(args.start, args.end, pywikibot.Page(langlink.site, langlink.title))
 
         # print stats
         for i, lang in enumerate(sorted(sitestats)):
