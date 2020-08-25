@@ -40,6 +40,14 @@ set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
 set out "interwiki_backlinks.svg"
 replot
 
+set ylabel 'Anzahl Seitenzugriffe'
+set term png enhanced size 800,600 font "Arial,10" lw 2
+set out "interwiki_pageviews.png"
+plot "< sort -t'\t' -rnk13 interwiki.tsv" using :13:xtic(1) title '' with boxes
+set term svg size 640,480 dynamic enhanced font "Arial,10" lw 2
+set out "interwiki_pageviews.svg"
+replot
+
 set ylabel 'Jahr der Erstellung der Seite'
 set ydata time
 # 2002-05-13T13:59:54Z

@@ -55,6 +55,8 @@ Plot some of the columns using [[file:interwiki.gpi][interwiki.gpi]]:
   gnuplot interwiki.gpi
 #+END_SRC
 
+#+RESULTS:
+
 ** text length (wiki markup)
 
 [[interwiki_textlen.png]]
@@ -70,6 +72,11 @@ Plot some of the columns using [[file:interwiki.gpi][interwiki.gpi]]:
 ** number of backlinks
 
 [[interwiki_backlinks.png]]
+
+** number of pageviews
+
+[[interwiki_pageviews.png]]
+
 
 ** date of the first version of a page
 
@@ -92,6 +99,8 @@ Plot some of the columns using [[file:works.gpi][works.gpi]]:
   gnuplot works.gpi
 #+END_SRC
 
+#+RESULTS:
+
 ** text length (wiki markup)
 
 [[works_textlen.png]]
@@ -107,6 +116,10 @@ Plot some of the columns using [[file:works.gpi][works.gpi]]:
 ** number of backlinks
 
 [[works_backlinks.png]]
+
+** number of pageviews
+
+[[works_pageviews.png]]
 
 ** number of language editions
 
@@ -132,6 +145,8 @@ Plot some of the columns using [[file:contemporaries.gpi][contemporaries.gpi]]:
   gnuplot contemporaries.gpi
 #+END_SRC
 
+#+RESULTS:
+
 ** text length (wiki markup)
 
 [[contemporaries_textlen.png]]
@@ -147,6 +162,10 @@ Plot some of the columns using [[file:contemporaries.gpi][contemporaries.gpi]]:
 ** number of backlinks
 
 [[contemporaries_backlinks.png]]
+
+** number of pageviews
+
+[[contemporaries_pageviews.png]]
 
 ** number of language editions
 

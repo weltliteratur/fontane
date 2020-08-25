@@ -45,6 +45,15 @@ set term svg size 640,480 dynamic enhanced font FONT lw 2
 set out "works_backlinks.svg"
 replot
 
+set xlabel font LFONT 'Anzahl Seitenzugriffe'
+set term png enhanced size 800,600 font FONT lw 2
+set out "works_pageviews.png"
+plot "< sort -t'\t' -nk13 works.tsv" using 13:0:ytic(1) title '' with p pt 7
+set term svg size 640,480 dynamic enhanced font FONT lw 2
+set out "works_pageviews.svg"
+replot
+
+
 set xlabel font LFONT 'Anzahl Sprachversionen'
 set term png enhanced size 800,600 font FONT lw 2
 set out "works_languages.png"
