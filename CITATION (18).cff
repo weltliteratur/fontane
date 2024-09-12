@@ -1,0 +1,24 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Fontane
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Robert
+    family-names: Jäschke
+    affiliation: Humboldt-Universität zu Berlin
+    email: robert.jaeschke@hu-berlin.de
+    orcid: 'https://orcid.org/0000-0003-3271-9653'
+  - given-names: Michel
+    family-names: Schwab
+repository-code: 'https://github.com/weltliteratur/fontane'
+abstract: >-
+  compare “Theodor Fontane” articles in different Wikipedia
+  language editions
+license: GPL-3.0
+commit: 7d59c3bcaaafd9a33b50eb9c3a2e286ac652699d
+date-released: '2020-08-26'
