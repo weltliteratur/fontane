@@ -15,10 +15,15 @@ authors:
     orcid: 'https://orcid.org/0000-0003-3271-9653'
   - given-names: Michel
     family-names: Schwab
+    orcid: 'https://orcid.org/0000-0001-5569-6568'
+  - given-names: Frank
+    family-names: Fischer
+    orcid: 'https://orcid.org/0000-0003-2419-6629'
+    affiliation: Freie Universität Berlin
 repository-code: 'https://github.com/weltliteratur/fontane'
 abstract: >-
-  compare “Theodor Fontane” articles in different Wikipedia
-  language editions
+  We compare “Theodor Fontane” articles in different Wikipedia
+  language editions.
 license: GPL-3.0
 commit: 7d59c3bcaaafd9a33b50eb9c3a2e286ac652699d
 date-released: '2020-08-26'
